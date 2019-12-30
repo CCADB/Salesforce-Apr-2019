@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<HomePageComponent xmlns="http://soap.sforce.com/2006/04/metadata">
+    <links>Data_Integrity_Audit_Archives_For_Microsoft</links>
+    <links>Data_Integrity_Modified_Records</links>
+    <pageComponentType>links</pageComponentType>
+</HomePageComponent>

@@ -1,0 +1,127 @@
+<apex:page controller="ICAuditSameAsParentReportController" sidebar="false" docType="html-5.0">
+
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <apex:slds />    
+        <meta http-equiv="x-ua-compatible" content="ie=edge"/>    
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <!--<script src="//code.jquery.com/jquery-3.3.1.js"></script>-->
+        <body>
+            <apex:form id="frm">
+                <div class="slds">
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_1-of-1">
+                            <div class="slds-page-header" style="margin-top:10px;">
+                                <div class="slds-grid">
+                                    <div class="slds-col slds-has-flexi-truncate">
+                                        <div class="slds-media slds-no-space slds-grow">
+                                            <div class="slds-media__figure">
+                                                <!-- <svg class="slds-icon slds-icon-standard-report" aria-hidden="true">
+                                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "/assets/icons/standard-sprite/svg/symbols.svg#report")}"></use>
+                                                </svg> -->
+                                                <apex:image value="{!$Resource.CCADB}" width="150" height="80"/>
+                                            </div>
+                                            <div class="slds-media__body" style="margin-top: 8px;">
+                                                <p class="slds-text-title--caps slds-line-height--reset">Intermediate Certs</p>
+                                                <h1 class="slds-page-header__title slds-m-right--small slds-align-middle" title="">Audit Same As Parent Report</h1>
+                                            </div>              
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!--Body-->
+                            <div id="mainbody" style="margin-top:25px;">
+                                <div class="slds-section slds-is-open">
+                                    <h3 class="slds-section__title slds-theme_shade" style="color: black;">
+                                        <span class="slds-truncate slds-p-horizontal_small" title="Records Displayed">({!lstWrapIntermediateCerts.size} records displayed)</span>
+                                    </h3>
+                                    <div aria-hidden="false" class="slds-section__content">
+                                        <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered" width="100%">
+                                            <thead>
+                                                <tr class="slds-line-height_reset">
+                                                    <th class="" scope="col" width="14%">
+                                                        <div  title="CA Owner">CA Owner</div>
+                                                    </th>
+                                                    <th class="" scope="col" width="20%">
+                                                        <div  title="Intermediate Certificate Name">Intermediate Certificate</div>
+                                                    </th>
+                                                    <th class="" scope="col" width="20%">
+                                                        <div  title="Parent CA Owner/Certificate">Parent Certificate</div>
+                                                    </th>
+                                                    <th class="" scope="col" width="8%">
+                                                        <div  title="Audits Same as Parent">Audits Same as Parent</div>
+                                                    </th>
+                                                    <th class="" scope="col" width="25%">
+                                                        <div  title="Message Audits Same As Parent">'Audit Same As Parent' Message</div>
+                                                    </th>
+                                                    <th class="" scope="col" width="8%">
+                                                        <div  title="CP/CPS Same as Parent">CP/CPS Same as Parent</div>
+                                                    </th>                         
+                                                    <th class="" scope="col" width="25%">
+                                                        <div  title="Message CP/CPS Same as Parent">'CP/CPS Same as Parent' Message</div>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <apex:repeat value="{!lstWrapIntermediateCerts}" var="result" rendered="{!lstWrapIntermediateCerts != null && lstWrapIntermediateCerts.size > 0}">
+                                                    <tr class="slds-hint-parent">
+                                                        <th data-label="CA Owner">
+                                                            <div  title="{!result.objIC.CA_Owner__c}">
+                                                                {!result.objIC.CA_Owner__c}
+                                                            </div>
+                                                        </th>
+                                                        <th data-label="Intermediate Certificate Name">
+                                                            <div  title="{!result.objIC.Name}">
+                                                                <a href="/{!result.objIC.Id}" target="_blank">{!result.objIC.Name}</a>
+                                                            </div>
+                                                        </th>
+                                                        <td data-label="Parent CA Owner/Certificate">
+                                                            <div  title="{!result.objIC.Parent.Name}">
+                                                                
+                                                                <a href="/{!result.objIC.ParentId}" target="_blank">{!result.objIC.Parent.Name}</a>
+                                                            </div>
+                                                        </td>
+                                                        <td data-label="Audits Same as Parent">
+                                                            <div  title="{!result.objIC.Audits_Same_as_Parent__c}">
+                                                                <apex:outputField value="{!result.objIC.Audits_Same_as_Parent__c}"/>
+                                                            </div>
+                                                        </td>
+                                                        <td data-label="Message Audits Same As Parent">
+                                                            <div  title="{!result.strAuditSameAsParent}">{!result.strAuditSameAsParent}</div>
+                                                        </td>
+                                                        <td data-label="CP/CPS Same as Parent">
+                                                            <div  title="{!result.objIC.CP_CPS_Same_as_Parent__c}">
+                                                                <apex:outputField value="{!result.objIC.CP_CPS_Same_as_Parent__c}"/>
+                                                            </div>
+                                                        </td>                                      
+                                                        <td data-label="Message CP/CPS Same as Parent">
+                                                            <div  title="{!result.strCPCPSSameAsParent}">{!result.strCPCPSSameAsParent}</div>
+                                                        </td>
+                                                    </tr>
+                                                </apex:repeat>
+                                                <tr style="display:{!if(lstWrapIntermediateCerts == null || lstWrapIntermediateCerts.size == 0,'','none')}">
+                                                    <td colspan="100%">
+                                                        No records to display.
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <style>
+                    table { 
+                        table-layout:fixed; 
+                    }
+                    table td, table th {
+                        word-wrap:break-word !important;
+                        white-space:normal !important;
+                    }
+                </style>
+            </apex:form>
+        </body>
+    </html>
+</apex:page>
